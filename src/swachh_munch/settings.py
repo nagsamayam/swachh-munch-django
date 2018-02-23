@@ -58,6 +58,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -111,7 +112,7 @@ DATABASES = {
     }
 }
 
-DATABASE_ROUTERS = ['profiles.routers.ProfileRouter',]
+# DATABASE_ROUTERS = ['profiles.routers.ProfileRouter',]
 
 
 # Password validation
@@ -132,6 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = ['profiles.auth_backend.CustomModelBackend']
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -146,6 +148,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Provide a lists of languages which your site supports.
+LANGUAGES = (
+    ('en', 'English'),
+    ('hi', 'Hindi'),
+)
+
+# Tell Django where the project's translation files should be.
+LOCALE_PATHS = (
+    PROJECT_DIR.parent.child('locale'),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -177,6 +189,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
 }
 
 JWT_AUTH = {

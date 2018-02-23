@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from basic.models import Channel
+from django.contrib.auth.hashers import check_password
 
 # Create your models here.
 
@@ -19,6 +20,14 @@ class Profile(models.Model):
     mac_address = models.CharField(max_length=191, null=True)
     avatar = models.CharField(max_length=191, null=True)
     birth_date = models.DateField(null=True)
+    otp_sent_at = models.DateTimeField(null=True)
+    mobile_number_verified_at = models.DateTimeField(null=True)
+    mobile_number_verified = models.BooleanField(default=False)
+    activation_link = models.CharField(max_length=255,null=True)
+    activation_link_sent_at = models.DateTimeField(null=True)
+    signed_up_with = models.CharField(max_length=30, default="email")
+    banned = models.BooleanField(default=False)
+    banned_at = models.DateTimeField(null=True)
     deleted_at = models.DateTimeField(null=True)
 
     class Meta:
@@ -27,3 +36,6 @@ class Profile(models.Model):
     def __str__(self):
         user = self.user
         return user.first_name + user.last_name
+
+    def check_otp(self, otp):
+        return check_password(otp, self.otp)

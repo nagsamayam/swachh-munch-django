@@ -11,6 +11,7 @@ from rest_framework.response import Response
 
 class ChannelListView(ListCreateAPIView):
     queryset = Channel.objects.all()
+    
     serializer_class = ChannelSerializer
 
     
