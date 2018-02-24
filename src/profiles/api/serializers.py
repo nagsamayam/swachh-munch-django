@@ -8,8 +8,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     
     email = serializers.EmailField(required=True, 
     validators=[UniqueValidator(queryset=User.objects.all())])
-    username = serializers.CharField(validators=[UniqueValidator(queryset=User.objects.all())])
-    password = serializers.CharField(min_length=8)
+    username = serializers.CharField(min_length=3, max_length=32, validators=[UniqueValidator(queryset=User.objects.all())])
+    password = serializers.CharField(min_length=8, write_only=True)
 
     class Meta:
         model = User
