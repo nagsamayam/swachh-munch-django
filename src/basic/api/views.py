@@ -4,9 +4,11 @@ from rest_framework.generics import (
     ListCreateAPIView
 )
 from .serializers import ChannelSerializer
-from basic.models import Channel
+from basic.models import Channel, Comment
 from django.db.models import Q
 from rest_framework.response import Response
+from django.views.generic import View
+from django.http import HttpResponse
 
 
 class ChannelListView(ListCreateAPIView):
@@ -35,5 +37,14 @@ class ChannelListView(ListCreateAPIView):
 
         return Response({"data":serializer.data})
     
+
+
+class CommentIndexView(View):
+    def get(self, request, *args, **kwargs):
+        comments = Comment.objects.all()
+        comment_list = []
+        for comment in comments:
+            print(comment_list.append(comment.title))
+        return HttpResponse(comment_list)
 
         

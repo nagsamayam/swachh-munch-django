@@ -15,6 +15,7 @@ from decouple import config
 from unipath import Path
 import datetime
 import sys
+from mongoengine import *
 
 
 PROJECT_DIR = Path(__file__).parent
@@ -47,6 +48,8 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (    
     'rest_framework',
+    'django_mongoengine',
+    'rest_framework_mongoengine',
 )
 
 LOCAL_APPS = (
@@ -104,6 +107,16 @@ DATABASES = {
         'NAME': config('DB_NAME', default='django_swachh_munch'),
         'USER': config('DB_USERNAME', default='root'),
         'PASSWORD': config('DB_PASSWORD', default=''),
+    },
+}
+
+MONGODB_DATABASES = {
+    "default": {
+        "name": 'swachh_munch',
+        "host": 'localhost',
+        "password": '',
+        "username": '',
+        "tz_aware": True, # if you using timezones in django (USE_TZ = True)
     },
 }
 
