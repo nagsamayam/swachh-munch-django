@@ -1,8 +1,10 @@
 from rest_framework import serializers
 from profiles.models import Profile
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from rest_framework.validators import UniqueValidator
 
+
+User = get_user_model()
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     

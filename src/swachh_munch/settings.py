@@ -110,9 +110,11 @@ DATABASES = {
     },
 }
 
+
+# MongoDB settings
 MONGODB_DATABASES = {
     "default": {
-        "name": 'swachh_munch',
+        "name": config('DB_NAME', default='django_swachh_munch'),
         "host": 'localhost',
         "password": '',
         "username": '',
@@ -148,6 +150,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'profiles.User'
 
 AUTHENTICATION_BACKENDS = ['profiles.auth_backend.CustomModelBackend']
 
