@@ -14,6 +14,8 @@ import dj_database_url
 from decouple import config
 from unipath import Path
 import datetime
+import sys
+from mongoengine import *
 
 
 PROJECT_DIR = Path(__file__).parent
@@ -46,6 +48,8 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (    
     'rest_framework',
+    'django_mongoengine',
+    'rest_framework_mongoengine',
 )
 
 LOCAL_APPS = (
@@ -104,13 +108,27 @@ DATABASES = {
         'USER': config('DB_USERNAME', default='root'),
         'PASSWORD': config('DB_PASSWORD', default=''),
     },
-    'profiles': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME', default='django_swachh_munch'),
-        'USER': config('DB_USERNAME', default='root'),
-        'PASSWORD': config('DB_PASSWORD', default=''),
-    }
 }
+
+
+# MongoDB settings
+MONGODB_DATABASES = {
+    "default": {
+        "name": config('DB_NAME', default='django_swachh_munch'),
+        "host": 'localhost',
+        "password": '',
+        "username": '',
+        "tz_aware": True, # if you using timezones in django (USE_TZ = True)
+    },
+}
+
+# Set sqlite to run tests
+
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': PROJECT_DIR.parent.child('db.sqlite3'),
+    }
 
 # DATABASE_ROUTERS = ['profiles.routers.ProfileRouter',]
 
@@ -132,6 +150,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'profiles.User'
 
 AUTHENTICATION_BACKENDS = ['profiles.auth_backend.CustomModelBackend']
 
@@ -190,6 +210,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
+
+    # Testing specific
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
 JWT_AUTH = {

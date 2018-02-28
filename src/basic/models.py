@@ -2,6 +2,11 @@ from django.db import models
 from django.db.models import signals
 from django.utils.text import slugify
 
+from django_mongoengine import Document, EmbeddedDocument
+#from mongoengine import *
+from django_mongoengine import fields
+import datetime
+
 # Create your models here.
 
 
@@ -26,6 +31,9 @@ class Channel(models.Model):
     def __str__(self):
         return self.title
 
+class Comment(Document):
+    title = fields.StringField(max_length=120)
+    body = fields.StringField(max_length=120)
 
 def channel_pre_save_receiver(sender, instance, *args, **kwargs):
     instance.slug = slugify(instance.title)

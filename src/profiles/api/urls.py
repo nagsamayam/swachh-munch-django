@@ -6,5 +6,6 @@ router = routers.DefaultRouter()
 app_name = 'profiles'
 
 urlpatterns = [
-    path('', views.UserCreateView.as_view(), name='account-create')
+    path('', views.ProfileCreateView.as_view(), name='account-create'),
+   # path('', views.ProfileCreateView.as_view(), name="profile-create")
 ]
