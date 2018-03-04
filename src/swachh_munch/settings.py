@@ -129,6 +129,10 @@ if 'test' in sys.argv:
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': PROJECT_DIR.parent.child('db.sqlite3'),
     }
+    MONGODB_DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': PROJECT_DIR.parent.child('db.sqlite3'),
+    }
 
 # DATABASE_ROUTERS = ['profiles.routers.ProfileRouter',]
 

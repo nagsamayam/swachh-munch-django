@@ -1,9 +1,11 @@
 import factory
 from faker import Faker
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from profiles.models import Profile
 from basic.models import Channel
 
+
+User = get_user_model()
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:

@@ -15,7 +15,7 @@ class UserCreateView(APIView):
             user = serializer.save()
 
             if user:
-                data = {"data": {"id": user.id, 'username': user.username, 'user_id': user.profile.user_id}}
+                data = {"data": {"id": user.id, 'username': user.username}}
                 return Response(data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -30,6 +30,6 @@ class ProfileCreateView(APIView):
             user = serializer.save()
 
             if user:
-                data = {"data": {"id": user.id, 'username': user.username, 'user_id': user.profile.user_id}}
+                data = {"data": {"id": user.id, 'username': user.username}}
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
