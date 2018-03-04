@@ -144,4 +144,16 @@ class ProfileCreateViewTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_422_UNPROCESSABLE_ENTITY)
         self.assertEqual(len(response.data['password']), 1)
 
+    def test_user_can_login_with_email(self):
+
+        response = self.client.post('/api-token-auth/', {'username': self.test_user.email, 'password': "12345678"}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsNotNone(response.data['token'])
+
+    def test_user_should_be_unauthenticated_on_invalid_credentials(self):
+        response = self.client.post('/api-token-auth/', {'username': self.test_user.username, 'password': "1234"}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
 
